@@ -41,14 +41,33 @@ struct union_find
 
     void init(int N)
     {
-        if (N > MAXN)   tree.reserve(N);
+        if (N > MAXN)   tree.resize(N);
         size = N;
         for ( int i = 0; i < N; ++i ) 
             tree[i] = i;
     }
 
+    
+    /**
+     * @brief For some application like connected component labeling
+     * in image pre-processing, where you don't really know what's
+     * the maximum label will be. that's where you may want dynamic 
+     * increasing feature of union find !!!
+     *
+     * @param max_label
+     */
+    void dynamic_increase(int max_label)
+    {
+        if (max_label < size)   return;
+        tree.resize(max_label + 1);
+        for ( int i = size; i < max_label;  ++i) 
+            tree[i] = i;
+        size = max_label + 1;
+    }
+
     int find(int a)
     {
+        // dynamic_increase(N);
         return tree[a] == a ? a : tree[a] = find(tree[a]);
     }
 

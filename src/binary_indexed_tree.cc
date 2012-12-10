@@ -16,6 +16,7 @@
 
 #include <cstdio>
 #include <cstdlib>
+#include <cassert>
 #include <vector>
 
 
@@ -27,7 +28,6 @@ using std::vector;
  * other application rather then poj.
  */
 static const int MAXN = 100000;
-
 
 /**
  * @brief Notice that there is a machine dependent operation, which is to find the 
@@ -69,6 +69,7 @@ struct binary_indexed_tree
         for ( i = 1; i <= N; ++i ) 
             cumulate[i] = frequnces[i] ? cumulate[i-1] + 1 : cumulate[i-1];
 
+        tree.resize(N + 1);
         tree[0] = 0;
         for ( i = 1; i <= N; ++i ) 
             tree[i] = cumulate[i] - cumulate[i - (i & -i)];
@@ -77,6 +78,7 @@ struct binary_indexed_tree
 
     int read(int idx)
     {
+        assert(idx <= size);
         int sum = 0;
         while (idx > 0)
         {
@@ -88,12 +90,12 @@ struct binary_indexed_tree
 
     void update(int idx, int val)
     {
+        assert(idx <= size);
         while (idx <= size)
         {
             tree[idx] += val;
             idx += (idx & -idx);
         }
-
     }
 };				/* ----------  end of struct binary_indexed_tree  ------ */
 
