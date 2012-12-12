@@ -41,18 +41,18 @@ static const int MAXN = 100000;
  *
  * Important!!!
  * usally, we don't really use the index 0 in binary indexed tree. which affect the 
- * frequnces array using for construction binary_indexed_tree too. By default, we 
+ * frequnces array using for construction BinaryIndexedTree too. By default, we 
  * think tree[0] = 0, and frequnces[0] = 0;
  */
-struct binary_indexed_tree 
+struct BinaryIndexedTree 
 {
     int size;
     vector<int> tree;
-    binary_indexed_tree(): size(0) 
+
+    BinaryIndexedTree(): size(0) 
     {
         tree.reserve(MAXN + 1);
     }
-
 
     /**
      * @brief The frequnces vector need based on index 1.
@@ -76,7 +76,7 @@ struct binary_indexed_tree
         size = N;
     }
 
-    int read(int idx)
+    int query(int idx)
     {
         assert(idx <= size);
         int sum = 0;
@@ -97,6 +97,68 @@ struct binary_indexed_tree
             idx += (idx & -idx);
         }
     }
-};				/* ----------  end of struct binary_indexed_tree  ------ */
+
+};				/* ----------  end of struct BinaryIndexedTree  ------ */
+
+
+
+/**
+ * @brief 
+ */
+struct BinaryIndexedTree2D
+{
+    int XMAX;
+    int YMAX;
+    vector<int> tree2d;
+
+    BinaryIndexedTree2D (): XMAX(0), YMAX(0) {}                             /* constructor */
+
+    int &at(int x, int y)
+    {
+        return tree2d[y * XMAX + x];
+    }
+
+    int get(int x, int y)
+    {
+        return tree2d[y * XMAX + X];
+    }
+
+    void set(int x, int y, int val)
+    {
+        tree2d[y * XMAX + x] = val;
+    }
+
+    int query(int x, int y)
+    {
+        int sum = 0;
+        int idx;
+        while (y > 0)
+        {
+            idx = x;
+            while (idx > 0)
+            {
+                sum += get(idx, y);
+                idx -= (idx & -idx);
+            }
+            y -= (y & -y);
+        }
+    }
+
+    void update(int x, int y, int val)
+    {
+        int idx;
+        while (y <= YMAX)
+        {
+            idx = x;
+            while (idx <= XMAX)
+            {
+                set(idx, y, get(idx, y) + val); 
+                idx += (idx & -idx);
+            }
+            y += (y & -y);
+        }
+    }
+
+}; /* -----  end of struct BinaryIndexedTree2D  ----- */
 
 
