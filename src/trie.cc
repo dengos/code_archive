@@ -25,34 +25,34 @@ using std::string;
 
 
 /**
- * @brief A rather simple version of trie_node for string check.
+ * @brief A rather simple version of TrieNode for string check.
  * Since A-B may be not the only care in string processing. I use 
- * contain std::vector for simple use. You can port whatever trie_node
+ * contain std::vector for simple use. You can port whatever TrieNode
  * structure you want, under the interface:
- *      1. find the next trie_node given by char c. If don't exist, return NULL.
- *      ---> trie_node *find_next(char c)
- *      2. check whether they exist trie_node associate with char c, if not, 
+ *      1. find the next TrieNode given by char c. If don't exist, return NULL.
+ *      ---> TrieNode *find_next(char c)
+ *      2. check whether they exist TrieNode associate with char c, if not, 
  *      create a new node for char c, return the pointer to such node.
- *      ---> trie_node *insert(char c)
+ *      ---> TrieNode *insert(char c)
  */
-struct trie_node 
+struct TrieNode 
 { 
-    typedef vector<trie_node *> node_vector;
+    typedef vector<TrieNode *> node_vector;
 
     char key;
     int value;
     // I use vector for simplify, you may change for performance.
-    vector<trie_node *> children;
+    vector<TrieNode *> children;
 
-    trie_node(char c): key(c), value(0) {}
-    ~trie_node()
+    TrieNode(char c): key(c), value(0) {}
+    ~TrieNode()
     {
-        for ( vector<trie_node *>::iterator iter = children.begin(); 
+        for ( vector<TrieNode *>::iterator iter = children.begin(); 
                 iter != children.end(); ++iter ) 
             delete *iter;
     }
 
-    trie_node *find_next(char c)
+    TrieNode *find_next(char c)
     {
         for ( node_vector::iterator iter = children.begin(); 
                 iter != children.end(); ++iter ) 
@@ -61,50 +61,50 @@ struct trie_node
         return NULL;
     }
 
-    trie_node *insert(char c)
+    TrieNode *insert(char c)
     {
-        trie_node *nnode = new trie_node(c);
+        TrieNode *nnode = new TrieNode(c);
         children.push_back(nnode);
         return nnode;
     }
-};				/* ----------  end of struct trie_node  ------ */
+};				/* ----------  end of struct TrieNode  ------ */
 
 
-class trie
+class Trie
 {
-public:
-    trie(): root(0){};
-    ~trie() {};
+    public:
+        Trie(): root(0){};
+        ~Trie() {};
 
-    trie_node *find(const string &name)
-    {
-        trie_node *node = &root;
-
-        for ( string::const_iterator iter = name.begin(); 
-                iter != name.end(); ++iter ) 
-            if ((node = node->find_next(*iter)) == NULL)
-                break;
-        return node;
-    }
-
-    trie_node *insert(const string &name)
-    {
-        trie_node *prev = &root;
-        trie_node *node = NULL;
-
-        for ( string::const_iterator iter = name.begin(); 
-                iter != name.end(); ++iter ) 
+        TrieNode *find(const string &name)
         {
-            if ((node = prev->find_next(*iter)) == NULL)
-                node = prev->insert(*iter);
-            prev = node;
+            TrieNode *node = &root;
+
+            for ( string::const_iterator iter = name.begin(); 
+                    iter != name.end(); ++iter ) 
+                if ((node = node->find_next(*iter)) == NULL)
+                    break;
+            return node;
         }
 
-        return node;
-    }
+        TrieNode *insert(const string &name)
+        {
+            TrieNode *prev = &root;
+            TrieNode *node = NULL;
 
-private:
-    trie_node root;
+            for ( string::const_iterator iter = name.begin(); 
+                    iter != name.end(); ++iter ) 
+            {
+                if ((node = prev->find_next(*iter)) == NULL)
+                    node = prev->insert(*iter);
+                prev = node;
+            }
+
+            return node;
+        }
+
+    private:
+        TrieNode root;
 };
 
 
@@ -125,7 +125,7 @@ private:
 main ( int argc, char *argv[] )
 {
     trie t;
-    trie_node *node = NULL;
+    TrieNode *node = NULL;
     node = t.insert(string("abc"));
     node->value = 10;
     node = t.insert(string("abdd"));

@@ -23,7 +23,7 @@ static int MAXN = 100000;
 
 
 /**
- * @brief The basic version of union_find data structure, with 
+ * @brief The basic version of UnionFind data structure, with 
  * path compression.
  * Do remember, union-find is a very powerfull data structure.
  * Sometime, you need to modify the data-structure a lit bit, and
@@ -33,56 +33,58 @@ static int MAXN = 100000;
  * trace. And before use, you need init the whole data structure with
  * parameter N.
  */
-struct union_find 
+class UnionFind 
 {
-    int size;
-    vector<int> tree;
-    union_find(): size(0) { tree.reserve(MAXN + 1); }
+    public:
+        UnionFind(): size(0) { }
 
-    void init(int N)
-    {
-        if (N > MAXN)   tree.resize(N);
-        size = N;
-        for ( int i = 0; i < N; ++i ) 
-            tree[i] = i;
-    }
+        void init(int N)
+        {
+            tree.resize(N);
+            size = N;
+            for ( int i = 0; i < N; ++i ) 
+                tree[i] = i;
+        }
 
-    
-    /**
-     * @brief For some application like connected component labeling
-     * in image pre-processing, where you don't really know what's
-     * the maximum label will be. that's where you may want dynamic 
-     * increasing feature of union find !!!
-     *
-     * @param max_label
-     */
-    void dynamic_increase(int max_label)
-    {
-        if (max_label < size)   return;
-        tree.resize(max_label + 1);
-        for ( int i = size; i < max_label;  ++i) 
-            tree[i] = i;
-        size = max_label + 1;
-    }
+        int find(int a)
+        {
+            // dynamic_increase(N);
+            return tree[a] == a ? a : tree[a] = find(tree[a]);
+        }
 
-    int find(int a)
-    {
-        // dynamic_increase(N);
-        return tree[a] == a ? a : tree[a] = find(tree[a]);
-    }
+        bool is_connected(int a, int b)
+        {
+            return find(a) == find(b);
+        }
 
-    bool is_connected(int a, int b)
-    {
-        return find(a) == find(b);
-    }
+        void connect(int a, int b)
+        {
+            if (is_connected(a, b))     return;
+            tree[find(a)] = find(b);
+        }
 
-    void connect(int a, int b)
-    {
-        if (is_connected(a, b))     return;
-        tree[find(a)] = find(b);
-    }
+    private:
+        /**
+         * @brief For some application like connected component labeling
+         * in image pre-processing, where you don't really know what's
+         * the maximum label will be. that's where you may want dynamic 
+         * increasing feature of union find !!!
+         *
+         * @param max_label
+         */
+        void dynamic_increase(int max_label)
+        {
+            if (max_label < size)   return;
+            tree.resize(max_label + 1);
+            for ( int i = size; i < max_label;  ++i) 
+                tree[i] = i;
+            size = max_label + 1;
+        }
 
-};				/* ----------  end of struct union_find  ------ */
+    private:
+        int size;
+        vector<int> tree;
+};				/* ----------  end of struct UnionFind  ------ */
 
 
 
