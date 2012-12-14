@@ -32,6 +32,14 @@ optimal solution for RMQ. As describe in previous tutorial, the indexed way is m
 here is to illustrate that segment tree is a very powerfull data structure, you can use whatever you want as
 the node of segment tree, but keep the invariance!!!
 
+5. Advance Heap (comming soon)
+No much advance here, to be honest.
+This heap support the basic operation of c++ standard heap, and with extra operation like delete and update.
+In order to achieve the logN complexity for delete and update operation, the heap node must id must be uniq.
+By uniq, I mean something like the vertex id in a graph, or edges id, etc.
+You may consider this kind of heap structure is aimed for Prim algorithm for Minimum Spanning Tree.
+
+
 Author
 ============
 name :   dengos  
