@@ -39,6 +39,8 @@ In order to achieve the logN complexity for delete and update operation, the hea
 By uniq, I mean something like the vertex id in a graph, or edges id, etc.
 You may consider this kind of heap structure is aimed for Prim algorithm for Minimum Spanning Tree.
 
+6. Point  
+A basic 2-D point data-structure.
 
 Author
 ============
