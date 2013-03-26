@@ -1,0 +1,76 @@
+/**
+ * ===========================================================================
+ *
+ *          @file  graph.cpp
+ *         @brief  
+ *
+ *        @author  dengos (w), dengos.w@gmail.com, scut
+ *       @version  1.0
+ *          @date  03/26/2013 12:59:32 PM
+ *
+ * ===========================================================================
+ */
+
+
+
+#include <vector>
+
+
+using std::vector;
+
+
+typedef struct
+{
+    int from;
+    int to;
+    int weight;
+} edge;
+
+
+typedef struct
+{
+    int to;
+    int link_id;
+} link;
+
+
+/**
+ * @brief 
+ * This is a adjacency list implementation. [ref: CS97SI - basic graph algorithm]
+ * 
+ * Solution 1. using linked lists
+ *      too much memory/time overhead;
+ *      using dynamic allocated memory or pointeres is bad;
+ *      also, in competetion, using std::list usually lead to TLE;
+ * Solution 2. using a array of vectors
+ *      easier to code, no bad memory issues;
+ *      but very slow; // indeed, but still fast than list usually.
+ * Solution 3. using arrays
+ *      assuming the total number of edges is known
+ *      very fast and memory-efficient
+ *
+ * This implementation is based on solution 3.
+ */
+
+
+/**
+ * @brief 
+ */
+class adjacency_list
+{
+    public:
+        adjacency_list (int n, vector<edge> &edges)
+        {
+            int m = edges.size();
+            quick_table.
+        }/* constructor */
+
+
+    protected:
+
+    private:
+        vector<int>  quick_table;
+        vector<link> link_stack;
+}; /* -----  end of class adjacency_list  ----- */
+
+

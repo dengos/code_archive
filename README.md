@@ -42,6 +42,9 @@ You may consider this kind of heap structure is aimed for Prim algorithm for Min
 6. Point  
 A basic 2-D point data-structure.
 
+7. Adjacency list
+A array-based adjacency list implementation.
+
 Author
 ============
 name :   dengos  
