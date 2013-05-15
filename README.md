@@ -45,6 +45,8 @@ A basic 2-D point data-structure.
 7. Adjacency list
 A array-based adjacency list implementation.
 
+8. recursive and non-recursive implementation of binary tree travelling.
+
 Author
 ============
 name :   dengos  
